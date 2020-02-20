@@ -1,0 +1,56 @@
+#include <SoftwareSerial.h>
+
+SoftwareSerial geeeTechVoiceRecogniser(10, 11); // RX, TX
+
+void setup()
+{  
+  Serial.begin(9600);
+  setupGeeTech(); 
+  delay(1000);
+  setCommandGroup(0x21);
+}
+
+void loop()
+{
+  getVoiceCommand();
+}
+
+void setupGeeTech()
+{
+  geeeTechVoiceRecogniser.begin(9600);
+  delay(100);
+  geeeTechVoiceRecogniser.write(0xAA);
+  geeeTechVoiceRecogniser.write(0x36);
+}
+
+void setCommandGroup(uint8_t cmdGroupNum)
+{
+  geeeTechVoiceRecogniser.write(0xAA);
+  geeeTechVoiceRecogniser.write(0x21);
+  geeeTechVoiceRecogniser.write(0x22);
+  geeeTechVoiceRecogniser.write(0x23);
+}
+
+void getVoiceCommand()
+{
+ String getVoiceCommand() 
+  { 
+    String com = ""; 
+    while (Serial.available()) 
+    { 
+      com = Serial.readStringUntil('\n'); 
+      Serial.println(com); 
+      } 
+      return com; 
+      }
+ }
+
+ bool isThereGeeTechMessage()
+{
+  return (Serial.available() > 0);
+}
+
+int parseVoiceCommand(String response)
+{
+  // how do you figure out what the response is and return a value?
+}
